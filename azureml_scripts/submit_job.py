@@ -29,7 +29,7 @@ def main() -> None:
 
     # Here give the path to source directory.
     # This directory will be copied to AzoureML and be mounted in environment.
-    source_directory = repo_root / "azureml_example"
+    source_directory = repo_root / "azureml_tutorial"
     # After the source directory is mounted, AzureML will execute the following bash command:
     commands = [
         "python download.py --dataset_name moon_dataset --output_folder data",
