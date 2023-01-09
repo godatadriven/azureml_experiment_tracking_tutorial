@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "azureml-example"
+version = "0.1.0"
+description = ""
+authors = ["Jordi Smit <j0rd1smit@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "azureml_tutorial"}]
+
+[tool.poetry.dependencies]
+python = "3.8.*"
+azureml-core = "^1.40.0"
+azureml-mlflow = "1.42.*"
+azureml-dataset-runtime = {version = "^1.40.0", optional = true, markers = "sys_platform == 'linux'"}
+mlflow-skinny = "^1.28.0"
+matplotlib = "^3.6.0"
+pandas = "^1.5.2"
+numpy = "^1.24.1"
+scikit-learn = "^1.2.0"
+
+[tool.poetry.extras]
+azuremlruntime = ["azureml-dataset-runtime"]
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
