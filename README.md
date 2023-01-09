@@ -15,7 +15,16 @@ The training process consists of the following steps:
 5. Save the model.
 
 ## The end goal
-TODO
+This tutorial has two goals. Firstly, we want to move our training process into the cloud such that we can leverage more computing power and train our model faster. 
+Secondly, we want to track our experiments in a single place such that we can track experiments over time and can compare different runs.
+
+When we are done we should have the following results:
+- All the metadata, hyperparameters and metrics of our experiments in a single place.
+   ![experiment_overview](images/experiment_overview.jpg)
+- We can log and store images, files and models related to our experiments in a single place.
+   ![experiment_overview](images/logged_decison_boundary.jpg)
+- We can register models and their artifacts in a single place, and we can easily download them for future usage.
+  - ![experiment_overview](images/registerd_artifacts.jpg)
 
 ## Preparation
 In this repo, we assume you have a working AzureML workspace.
@@ -104,8 +113,11 @@ Note: make sure run this inside a virtual environment.
 
 
 ## The tutorial
-TODO
-project and code overview
+This tutorial will first explore the existing ML solution and run it locally.
+Then, we will add experiment tracking to the existing solution such that we can track our experiments in AzureML.
+Thirdly, we will move the training process into the cloud to leverage more computing power and train our model faster.
+Then, we will explore how we can access the registered models for future usage.
+Finally, we explore how we can customize the training environment with a custom Docker image.
 
 ### Running the code locally
 TODO
