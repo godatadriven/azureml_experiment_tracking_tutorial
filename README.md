@@ -161,7 +161,72 @@ Now, we know how our training process works.
 Next, we will add experiment tracking to the existing solution such that we can track our experiments in AzureML.
 
 ### Adding experiment tracking
+In this section, we will add experiment tracking to the existing solution such that we can track our experiments in AzureML.
+The code will still run locally, but we the logs will be collected in the clouds.
 
+The first we need to do is tell MLFlow where to store the logs.
+We can do this using a mlflow tracking URI ([docs](https://mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri)).
+AzureML you can get and set the tracking URI by running:
+```python
+import mlflow
+from azureml.core import Workspace
+
+ws = Workspace.from_config()
+mlflow.set_tracking_uri(ws.get_mlflow_tracking_uri())
+```
+So, this will be the first thing we need to do in our training script.
+
+Next, we want to send our hyper-parameters and metrics to AzureML.
+We can do this by using the `mlflow.log_param` ([docs](https://mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_params)) and `mlflow.log_metric` ([docs](https://mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metrics)) functions.
+Important to note is that mlflow makes a distinction between hyper-parameters and metrics and thus stores them in different places.
+By using the `mlflow.log_param` function, we tell mlflow that the value is a hyper-parameter and by using the `mlflow.log_metric` function, we tell mlflow that the value is a metric.
+So, in our training script, we need to our print based logging logic with the following:
+
+```python
+import mlflow
+
+...
+for param, value in param_grid.items():
+    mlflow.log_param(f"gridsearch/{param}", str(value))
+
+...
+for k, v in grid_search.best_params_.items():
+    mlflow.log_param(f"selected/{k}", v)
+
+...
+
+mlflow.log_metric("accuracy", accuracy)
+...
+```
+
+The last thing is upload our training artifacts, like `model.joblib` and `decision_boundary.png`, to AzureML.
+We can do this by using the `mlflow.log_artifact` ([docs](https://mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_artifact)) function.
+This function can upload any file on disk.
+MLFlow also has the utility function `mlflow.log_figure` ([docs](https://mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_figure)) that can be used to upload a matplotlib figure directly from memory.
+We can use these functions to upload our artifacts to AzureML as follows:
+
+```python
+figure = create_decision_boundary_figure(model, df_test)
+mlflow.log_figure(figure, "decision_boundary.png")
+...
+# We use a tmp dir here because we keep the model saved locally.
+# However, `log_artifact` needs a path to a file stored on disk.
+with tempfile.TemporaryDirectory() as tmp_dir:
+    dump(model, f"{tmp_dir}/model.joblib")
+    mlflow.log_artifact(f"{tmp_dir}/model.joblib")
+```
+
+We have added all these changes to the `azureml_tutorial/train_with_mlflow.py` script.
+Have a look at the code and make sure you understand what is happening.
+When you are done, you can run the script using:
+
+```bash
+python azureml_tutorial/train_with_mlflow.py --train_dataset data/train.csv --test_dataset data/test.csv 
+```
+
+Now, we have added experiment tracking to the existing solution.
+However, we are still running the training process locally.
+Now, let's move the training process into the cloud.
 
 ### Registering the dataset in AzureML
 TODO
