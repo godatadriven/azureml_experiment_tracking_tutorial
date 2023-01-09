@@ -28,7 +28,7 @@ def main() -> None:
     commands = [
         "poetry install -E azuremlruntime",  # Tell poetry to install the optional azuremlruntime.
         "poetry run python azureml_example/download.py --dataset_name moon_dataset --output_folder data",
-        "poetry run python azureml_example/train.py --train_dataset data/train.csv --test_dataset data/test.csv",
+        "poetry run python azureml_example/train_with_mlflow.py --train_dataset data/train.csv --test_dataset data/test.csv",
         "poetry run python azureml_example/register.py --model_name moon_model",
     ]
     # Here we combine all the configuration

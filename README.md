@@ -6,6 +6,8 @@ The ML problem we are solving in this project is the noisy [two moon problem](ht
 The train and test data looks like this:
 
 ![train and test data](images/data.png)
+You can find the data in the `data` folder and the code to generate the data in `azureml_scripts/create_dataset.py`.
+
 We will use a Random Forest classifier from scikit-learn to solve this problem.
 The training process consists of the following steps:
 1. Load the data.
@@ -120,10 +122,46 @@ Then, we will explore how we can access the registered models for future usage.
 Finally, we explore how we can customize the training environment with a custom Docker image.
 
 ### Running the code locally
-TODO
+First, we will run the existing code locally to see how it works.
+To do this, we will use the `azureml_tutorial/train_original.py` script.
+This scripts performs the following steps:
+1. Load the data.
+2. Preform a grid search to find the best hyperparameters.
+3. Evaluate the model on the test data.
+4. Log the resulting hyperparameters and metrics.
+5. Visualize the resulting decision boundary.
+6. Save the model.
+
+Please take some time to read through the code and comments in the `azureml_tutorial/train_original.py` script.
+Make sure that you understand what is happening in each step.
+Once you are done, you can run the script using:
+
 ```bash
-python azureml_example/train.py --train_dataset data/train.csv --test_dataset data/test.csv 
+python azureml_tutorial/train_original.py --train_dataset data/train.csv --test_dataset data/test.csv 
 ```
+
+After running the script, you should see the following output:
+```
+Hyper-parameters:
+gridsearch/n_estimators [10, 25, 100]
+gridsearch/criterion ['gini', 'entropy']
+gridsearch/max_depth [2, 5, 10, None]
+Selected hyper-parameters:
+selected/criterion gini
+selected/max_depth None
+selected/n_estimators 25
+Metrics:
+accuracy 0.975
+```
+Furthermore, you should see a plot of the decision boundary stored in `decision_boundary.png` in your `cwd`.
+Finally, you should see a file `model.joblib` in your `cwd`.
+See, this [link](https://scikit-learn.org/stable/model_persistence.html) for more details on how sklearn uses joblib to store models.
+
+Now, we know how our training process works.
+Next, we will add experiment tracking to the existing solution such that we can track our experiments in AzureML.
+
+### Adding experiment tracking
+
 
 ### Registering the dataset in AzureML
 TODO

@@ -33,7 +33,7 @@ def main() -> None:
     # After the source directory is mounted, AzureML will execute the following bash command:
     commands = [
         "python download.py --dataset_name moon_dataset --output_folder data",
-        "python train.py --train_dataset data/train.csv --test_dataset data/test.csv",
+        "python train_with_mlflow.py --train_dataset data/train.csv --test_dataset data/test.csv",
         "python register.py --model_name moon_model",
     ]
     # Here we combine all the configuration
