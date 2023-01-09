@@ -1,0 +1,48 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - 'Dockerfile'
+
+jobs:
+  - job: buildImage
+
+    pool:
+      vmImage:  ubuntu-20.04
+
+    variables:
+      # This variable group should contain the following variables:
+      # - AZURE_TENANT_ID
+      # - AZURE_CLIENT_ID
+      # - AZURE_CLIENT_SECRET
+      # - AZURE_SUBSCRIPTION_ID: The subscription ID of the Azure subscription where the container registry is located
+      # - AZURE_RESOURCE_GROUP: The resource group where the container registry is located.
+      # - AZURE_CONTAINER_REGISTRY: The name of the container registry.
+      - group: YOUR_VARIABLE_GROUP_NAME # TODO: Replace with your variable group name that contains the service principal credentials
+      - name: IMAGE_NAME
+        value: YOUR_IMAGE_NAME # TODO: Replace with your image name
+
+    steps:
+      - script: |
+          az login --service-principal \
+            --tenant $(AZURE_TENANT_ID) \
+            --username $(AZURE_CLIENT_ID) \
+            --password $(AZURE_CLIENT_SECRET)
+          az account set --subscription $(AZURE_SUBSCRIPTION_ID)
+          az configure --defaults workspace=$(AZURE_WORKSPACE_NAME) group=$(AZURE_RESOURCE_GROUP)
+        displayName: az login
+
+      - script: |
+          az acr login --name $(AZURE_CONTAINER_REGISTRY).azurecr.io
+        displayName: login to docker
+
+      - script: | # TODO: Replace with your image name
+          docker build -t $(AZURE_CONTAINER_REGISTRY).azurecr.io/$(YOUR_IMAGE_NAME) .
+        displayName: build docker image
+
+      - script: |
+          docker push $(AZURE_CONTAINER_REGISTRY).azurecr.io/$(YOUR_IMAGE_NAME)
+        displayName: push docker image
