@@ -3,10 +3,10 @@ In this repo, we will show how AzureML can help your training process.
 
 ## The problem
 The ML problem we are solving in this project is the noisy [two moon problem](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html#sklearn.datasets.make_moons).
-The train and test data looks like this:
+The train and test data sets looks like this:
 
 ![train and test data](images/data.png)
-You can find the data in the `data` folder and the code to generate the data in `azureml_scripts/create_dataset.py`.
+You can find the data in the `data` folder and the code to generate the data  in `azureml_scripts/create_dataset.py`.
 
 We will use a Random Forest classifier from scikit-learn to solve this problem.
 The training process consists of the following steps:
@@ -21,7 +21,7 @@ This tutorial has two goals. Firstly, we want to move our training process into 
 Secondly, we want to track our experiments in a single place such that we can track experiments over time and can compare different runs.
 
 When we are done we should have the following results:
-- All the metadata, hyperparameters and metrics of our experiments in a single place.
+- All the metadata, hyperparameters and metrics of our experiments are stored a single place.
    ![experiment_overview](images/experiment_overview.jpg)
 - We can log and store images, files and models related to our experiments in a single place.
    ![experiment_overview](images/logged_decison_boundary.jpg)
@@ -31,16 +31,17 @@ When we are done we should have the following results:
 ## Preparation
 In this repo, we assume you have a working AzureML workspace.
 In the workspace, you should have a compute cluster and optionally a compute instance.
-You can follow preform all the step in this tutorial either on your local machine or on the compute instance.
+You can preform all the step in this tutorial either on your local machine or on the compute instance.
+
 
 ### Preparing your local machine
-You can only submit jobs from your local machine if the AzureML workspace is accessible from your local machine.
-Depending on the network setup, this might not be the case.
-If that is the case you should use a compute instance or contact your IT department.
-Here, I assume that your workspace is accessible from your local machine.
+In this tutorial, you need to be able to submit it from your machine. Depending on your network setup, your AzureML workspace might not be accessible from your local machine.
+In this case, you should either use a compute instance or contact your IT department.
+From here on, I assume that your workspace is accessible from your local machine.
+
 
 Another important thing is that the step "Registering the dataset in AzureML" cannot be performed on M1 Macs.
-If you are using a M1 Mac, you should run this step on a compute instance.
+If you are using an M1 Mac, you should run this step on a compute instance.
 All other steps can be performed on M1 Macs.
 
 The first step is to make sure that the Azure CLI is installed on your local machine.
@@ -82,7 +83,7 @@ You can do this by:
 11. In the VS Code terminal, navigate to your project directory at `~/cloudfiles/code/Users/<YOUR_USER_NAME>`.
 
 One important thing to note is that the compute instance has two disks:
-- `~/cloudfiles`: This is network disk that is shared between all compute instances in your workspace. All work on this is automatically saved to the cloud. So, if your restart or kill your compute instance, you will not lose any work. However, this comes at the price of slower disk access.
+- `~/cloudfiles`: This is a network disk that is shared between all compute instances in your workspace. All work on this is automatically saved to the cloud. So, if your restart or kill your compute instance, you will not lose any work. However, this comes at the price of slower disk access. Also be aware that if you save large datasets on this network drive, you get a bill for the storage.
 - `~/localfiles`: This is a local disk that is only accessible from your compute instance. This disk is faster than the `~/cloudfiles` disk. However, if you restart or kill your compute instance, you will lose all work on this disk.
 
 
@@ -266,7 +267,7 @@ python azureml_scripts/create_dataset.py
 ```
 Important: This script does not work on M1 Macs.
 So, we made the required packages optional.
-You can install on a compatable machine using:
+You can install on a compatible machine using:
 - pip: `pip install -r requirements-azuremlruntime.txt`
 - poetry: `poetry install -E azuremlruntime`
 
