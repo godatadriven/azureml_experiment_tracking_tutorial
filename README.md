@@ -81,6 +81,7 @@ You can do this by:
 9. Wait 5-10 min until the machine is ready.
 10. Click on the "VS Code" button to connect your VS Code to the compute instance. (Sometime you need to try this a few times. Especially, if you just created the compute instance.)
 11. In the VS Code terminal, navigate to your project directory at `~/cloudfiles/code/Users/<YOUR_USER_NAME>`.
+12. Run `conda init bash` and restart your terminal.
 
 One important thing to note is that the compute instance has two disks:
 - `~/cloudfiles`: This is a network disk that is shared between all compute instances in your workspace. All work on this is automatically saved to the cloud. So, if your restart or kill your compute instance, you will not lose any work. However, this comes at the price of slower disk access. Also be aware that if you save large datasets on this network drive, you get a bill for the storage.
@@ -266,10 +267,11 @@ When you are done, you can run the script using:
 python azureml_scripts/create_dataset.py
 ```
 Important: This script does not work on M1 Macs.
+It only works on linux.
 So, we made the required packages optional.
 You can install on a compatible machine using:
 - pip: `pip install -r requirements-azuremlruntime.txt`
-- poetry: `poetry install -E azuremlruntime`
+- poetry: automaticall checks if you are on a `x86_64` machine and only install if you machine is compatable.
 
 If you are using a M1 Mac, it might be easier to use an compute instance.
 
