@@ -381,7 +381,7 @@ Next, we need to build the image and push it to a Docker registry.
 You can do this three ways.
 First, you can build it locally and push it to DockerHub.
 ```bash
-docker build -t <your_dockerhub_username>/<your_image_name>:<your_image_tag> .
+docker build --platform=linux/amd64 -t <your_dockerhub_username>/<your_image_name>:<your_image_tag> .
 docker push <your_dockerhub_username>/<your_image_name>:<your_image_tag>
 ```
 
@@ -389,7 +389,7 @@ Secondly, you can build it locally and push it to your private Azure Container R
 ```bash
 az login
 az acr login --name <your_acr_name>
-docker build -t <your_acr_name>.azurecr.io/<your_image_name>:<your_image_tag> .
+docker build --platform=linux/amd64 -t <your_acr_name>.azurecr.io/<your_image_name>:<your_image_tag> .
 docker push <your_acr_name>.azurecr.io/<your_image_name>:<your_image_tag>
 ```
 
