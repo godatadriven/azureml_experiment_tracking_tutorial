@@ -52,6 +52,8 @@ def main() -> None:
     # Here we submit the configuration as an experiment job to AzureML.
     experiment = Experiment(workspace=workspace, name="Default")
     experiment.submit(script_run_config)
+    print("You follow the experiment here:")
+    print(experiment.get_portal_url())
 
 
 def parse_args() -> Namespace:

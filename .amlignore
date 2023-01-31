@@ -12,7 +12,6 @@ _justme
 decision_boundary.png
 Dockerfile
 .python-version
-README.md
 azureml-pipeline.yaml
 
 ### JetBrains template
