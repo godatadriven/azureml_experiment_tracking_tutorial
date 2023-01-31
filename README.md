@@ -261,19 +261,19 @@ dataset.register(workspace, name="moon_dataset")
 
 We have implemented this in the `azureml_scripts/create_dataset.py` script.
 Have a look at the code and make sure you understand what is happening.
+
+An important note is that this script does not work on M1 Macs.
+It only works on `x86_64` machines.
+During the creation on the virtual environment, poetry/pip automatically checks if you are on a `x86_64` machine and only install the required packages if your machine is compatable.
+So if your machine is not compatible, you will get an `No module named 'azureml.dataprep'` error when you run the script.
+If you are using a M1 Mac, it might be easier to use a compute instance.
+
 When you are done, you can run the script using:
 
 ```bash
 python azureml_scripts/create_dataset.py
 ```
-Important: This script does not work on M1 Macs.
-It only works on linux.
-So, we made the required packages optional.
-You can install on a compatible machine using:
-- pip: `pip install -r requirements-azuremlruntime.txt`
-- poetry: automaticall checks if you are on a `x86_64` machine and only install if you machine is compatable.
 
-If you are using a M1 Mac, it might be easier to use an compute instance.
 
 ### Running the code in AzureML
 Now that we have access to our data in the cloud, we can run our training process in the cloud.
@@ -288,7 +288,7 @@ The AzureML SDK has a utility function for this called `Environment.from_pip_req
 from azureml.core import Environment
 env = Environment.from_pip_requirements(
     name="moon_model_env",
-    file_path=str(requirements_path.resolve()),
+    file_path="absolute/path/to/requirements.txt",
 )
 # Python version must be added in this unclear way
 env.python.conda_dependencies.set_python_version("3.8")
