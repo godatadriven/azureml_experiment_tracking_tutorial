@@ -389,7 +389,7 @@ Secondly, you can build it locally and push it to your private Azure Container R
 ```bash
 az login
 az acr login --name <your_acr_name>
-docker build --platform=linux/amd64 -t <your_acr_name>.azurecr.io/<your_image_name>:<your_image_tag> .
+docker build -t <your_acr_name>.azurecr.io/<your_image_name>:<your_image_tag> .
 docker push <your_acr_name>.azurecr.io/<your_image_name>:<your_image_tag>
 ```
 
