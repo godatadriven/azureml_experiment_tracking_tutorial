@@ -4,7 +4,7 @@ FROM nvidia/cuda:11.7.1-base-ubuntu20.04
 
 # Gather the required apt-get images
 RUN apt-get -y update \
-    && apt-get install -y software-properties-common \
+    && apt-get install -y software-properties-common curl liblttng-ust0 \
     && add-apt-repository ppa:deadsnakes/ppa \
     && apt-get -y update \
     && add-apt-repository universe

@@ -14,15 +14,20 @@ def main() -> None:
     args = parse_args()
     workspace = Workspace.from_config()
 
+    # We need to know where the root directory of the repo is.
+    # We know where it is relative to this file.
+    # So, we can use the following trick to get the path to the repo root.
     repo_root = Path(__file__).parent.parent
 
+    # here we obtain the path to the requirements.txt file
+    # we know where it is relative to the repo root directory
+    requirements_path = repo_root / "requirements.txt"
+    # resolve makes a relative path absolute
+    abs_requirements_path = requirements_path.resolve()
     # Create the environment
-    # We use the "requirements-azuremlruntime.txt" since we need the azureml-dataset-runtime package
-    # to be able to download the dataset withing the job.
-    requirements_path = repo_root / "requirements-azuremlruntime.txt"
     env = Environment.from_pip_requirements(
         name="moon_model_env",
-        file_path=str(requirements_path.resolve()),
+        file_path=str(abs_requirements_path),
     )
     # Python version must be added in this unclear way
     env.python.conda_dependencies.set_python_version("3.8")
@@ -47,6 +52,8 @@ def main() -> None:
     # Here we submit the configuration as an experiment job to AzureML.
     experiment = Experiment(workspace=workspace, name="Default")
     experiment.submit(script_run_config)
+    print("You follow the experiment here:")
+    print(experiment.get_portal_url())
 
 
 def parse_args() -> Namespace:

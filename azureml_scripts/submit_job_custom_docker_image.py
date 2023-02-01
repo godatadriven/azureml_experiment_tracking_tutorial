@@ -26,7 +26,7 @@ def main() -> None:
     source_directory = Path(__file__).parent.parent
     # Some small changes to make the commands poetry compatible
     commands = [
-        "poetry install -E azuremlruntime",  # Tell poetry to install the optional azuremlruntime.
+        "poetry install",  # Tell poetry to install the required packages.
         "poetry run python azureml_tutorial/download.py --dataset_name moon_dataset --output_folder data",
         "poetry run python azureml_tutorial/train_with_mlflow.py --train_dataset data/train.csv --test_dataset data/test.csv",
         "poetry run python azureml_tutorial/register.py --model_name moon_model",
@@ -42,6 +42,8 @@ def main() -> None:
     # Here we submit the configuration as an experiment job to AzureML.
     experiment = Experiment(workspace=workspace, name="Default")
     experiment.submit(script_run_config)
+    print("You follow the experiment here:")
+    print(experiment.get_portal_url())
 
 
 def parse_args() -> Namespace:
