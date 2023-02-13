@@ -23,7 +23,7 @@ def main() -> None:
     mlflow.set_tracking_uri(ws.get_mlflow_tracking_uri())
 
     # the artifact path is the path where the model artifact is stored within the run.
-    artifact_path = "model.joblib"
+    artifact_path = "model"
     model_uri = f"runs:/{run_id}/{artifact_path}"
     mlflow.register_model(model_uri=model_uri, name=model_name)
 
