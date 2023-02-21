@@ -41,8 +41,10 @@ def main() -> None:
     # You can find the best hyper-parameters in the azureml UI under parameters.
 
     mlflow.set_tracking_uri(ws.get_mlflow_tracking_uri())
-        
-    with mlflow.start_run(run_name=f"""Training-{datetime.now().strftime("%m/%d/%Y,%H:%M:%S")}""") as run:
+
+    with mlflow.start_run(
+        run_name=f"""Training-{datetime.now().strftime("%m/%d/%Y,%H:%M:%S")}"""
+    ) as run:
         run_id = run.info.run_id
         for param, value in param_grid.items():
             mlflow.log_param(f"gridsearch/{param}", str(value))

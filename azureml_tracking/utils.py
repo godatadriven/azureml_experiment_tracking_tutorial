@@ -26,11 +26,13 @@ def get_workspace() -> Workspace:
         run = Run.get_context(allow_offline=False)
         return run.experiment.workspace
 
-def create_azureml_client(subscription_id, resource_group, workspace, credential = DefaultAzureCredential()):
-    ml_client = MLClient(
-        credential, subscription_id, resource_group, workspace
-    )
+
+def create_azureml_client(
+    subscription_id, resource_group, workspace, credential=DefaultAzureCredential()
+):
+    ml_client = MLClient(credential, subscription_id, resource_group, workspace)
     return ml_client
+
 
 def create_decision_boundary_figure(
     model: Any,

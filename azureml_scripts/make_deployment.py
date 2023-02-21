@@ -14,8 +14,9 @@ from azure.ai.ml.entities import (
 )
 from azure.identity import DefaultAzureCredential
 
+
 def main() -> None:
-    module = 'azureml-model-deployment'
+    module = "azureml-model-deployment"
     logger = Logger(module)
     args = parse_args()
 
@@ -38,7 +39,7 @@ def main() -> None:
     env = _create_deployment_env(args.image, args.env_name)
 
     # Create the deployment
-    logger.info(f'{module}: Deploying to endpoint...')
+    logger.info(f"{module}: Deploying to endpoint...")
     _create_or_update_deployment(
         ml_client,
         args.endpoint_name,
@@ -71,6 +72,7 @@ def main() -> None:
 def _get_or_create_endpoint(ml_client, endpoint_name):
     def _does_endpoint_exist(ml_client: MLClient, endpoint_name: str):
         return endpoint_name in [e.name for e in ml_client.online_endpoints.list()]
+
     if not _does_endpoint_exist(ml_client, endpoint_name):
         endpoint = ManagedOnlineEndpoint(name=endpoint_name, auth_mode="key")
         operation = ml_client.online_endpoints.begin_create_or_update(endpoint)
@@ -92,6 +94,7 @@ def _create_or_update_deployment(
     )
     operation = ml_client.online_deployments.begin_create_or_update(deployment).wait()
     assert operation.done()
+
 
 def _create_deployment_env(image: str, env_name: str) -> Environment:
     # We need to use a custom inference config else it does not work with a custom image
