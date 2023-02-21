@@ -5,10 +5,6 @@ from azureml.core import Model, Workspace
 
 
 def main() -> None:
-    """
-    A example script to download a model from Azure ML.
-    """
-
     args = process_args()
 
     ws = Workspace.from_config()
@@ -18,7 +14,7 @@ def main() -> None:
 
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
-    model.download(target_dir=output_dir / f"{version}")
+    model.download(target_dir=output_dir, exist_ok=True)
 
 
 def process_args() -> Namespace:
@@ -30,11 +26,10 @@ def process_args() -> Namespace:
         help="Model to download. Expected format: <model_name>:<version>",
     )
 
-    default_output = Path(__file__).parent / ".." / "model" / "versions"
     parser.add_argument(
         "--output",
         type=str,
-        default=str(default_output),
+        required=True,
         help="Output directory for the model",
     )
 
