@@ -80,10 +80,8 @@ def _export_model(model: Any) -> None:
     # We use a tmp dir here because we keep the model saved locally.
     # However, `log_artifact` needs a path to a file stored on disk.
     with tempfile.TemporaryDirectory() as tmp_dir:
-        dump(model, f"{tmp_dir}/model.pickle")
-        mlflow.log_artifact(f"{tmp_dir}/model.pickle")
-        # mlflow.pyfunc.save_model(f"{tmp_dir}/model/")
-        # mlflow.pyfunc.log_model(f"{tmp_dir}/model/", python_model=GridSearchCV())
+        dump(model, f"{tmp_dir}/model.joblib")
+        mlflow.log_artifact(f"{tmp_dir}/model.joblib")
 
 
 def parse_args() -> Namespace:
