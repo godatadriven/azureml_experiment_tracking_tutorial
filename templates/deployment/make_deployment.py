@@ -68,11 +68,10 @@ def main() -> None:
     print(response.json())
     logger.info(f"{module} Success!")
 
+def _does_endpoint_exist(ml_client: MLClient, endpoint_name: str):
+    return endpoint_name in [e.name for e in ml_client.online_endpoints.list()]
 
 def _get_or_create_endpoint(ml_client, endpoint_name):
-    def _does_endpoint_exist(ml_client: MLClient, endpoint_name: str):
-        return endpoint_name in [e.name for e in ml_client.online_endpoints.list()]
-
     if not _does_endpoint_exist(ml_client, endpoint_name):
         endpoint = ManagedOnlineEndpoint(name=endpoint_name, auth_mode="key")
         operation = ml_client.online_endpoints.begin_create_or_update(endpoint)
@@ -92,7 +91,8 @@ def _create_or_update_deployment(
         instance_count=1,
         endpoint_name=endpoint_name,
     )
-    operation = ml_client.online_deployments.begin_create_or_update(deployment).wait()
+    operation = ml_client.online_deployments.begin_create_or_update(deployment)
+    operation.wait()
     assert operation.done()
 
 
@@ -125,8 +125,8 @@ def _route_all_traffic_to_deployment(
     ml_client: MLClient, endpoint: ManagedOnlineEndpoint, deployment_name: str
 ):
     endpoint.traffic = {deployment_name: 100}
-    endpoint = ml_client.online_endpoints.begin_create_or_update(endpoint)
-    endpoint.wait()
+    operation = ml_client.online_endpoints.begin_create_or_update(endpoint)
+    operation.wait()
 
     return ml_client.online_endpoints.get(endpoint.name)
 

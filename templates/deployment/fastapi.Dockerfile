@@ -17,11 +17,9 @@ RUN poetry install --no-interaction --no-dev --no-root
 
 # We add the src and model folders after the dependencies are installed
 # This allows us to cache the dependency install layer.
-COPY pyproject.toml pyproject.toml
 COPY models models
 COPY uvicorn_log_conf.yml log_conf.yml
 COPY azureml_deployment/src src
-# COPY README.md README.md
 
 
 ## After copying the src and model folders, we can install our own package.

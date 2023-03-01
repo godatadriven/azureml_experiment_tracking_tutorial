@@ -1,13 +1,6 @@
-## Tutorial section 1: 
 ### AzureML Experiment Tracking
-This section will first explore the existing ML solution and run it locally.
-Then, we will add experiment tracking to the existing solution such that we can track our experiments in AzureML.
-Thirdly, we will move the training process into the cloud to leverage more computing power and train our model faster.
-Then, we will explore how we can access the registered models for future usage.
-Finally, we explore how we can customize the training environment with a custom Docker image.
 
-### Running the code locally
-First, we will run the existing code locally to see how it works.
+1. Training locally
 To do this, we will use the `azureml_tutorial/train_original.py` script.
 This scripts performs the following steps:
 1. Load the data.
@@ -17,12 +10,12 @@ This scripts performs the following steps:
 5. Visualize the resulting decision boundary.
 6. Save the model.
 
-Please take some time to read through the code and comments in the `azureml_tutorial/train_original.py` script.
+Please take some time to read through the code and comments in the `azureml_tracking/train_baseline.py` script.
 Make sure that you understand what is happening in each step.
 Once you are done, you can run the script using:
 
 ```bash
-python azureml_tutorial/train_original.py --train_dataset data/train.csv --test_dataset data/test.csv 
+python azureml_tracking/train_baseline.py --train_dataset data/train.csv --test_dataset data/test.csv 
 ```
 
 After running the script, you should see the following output:
@@ -42,10 +35,10 @@ Furthermore, you should see a plot of the decision boundary stored in `decision_
 Finally, you should see a file `model.joblib` in your `cwd`.
 See, this [link](https://scikit-learn.org/stable/model_persistence.html) for more details on how sklearn uses joblib to store models.
 
-Now, we know how our training process works.
-Next, we will add experiment tracking to the existing solution such that we can track our experiments in AzureML.
+Now, we know how our training process works. But we cannot keep track of the training processes and models.
+We can add experiment tracking to the existing solution such that we can track our experiments in AzureML.
 
-### Adding experiment tracking
+#### 2. Adding experiment tracking
 In this section, we will add experiment tracking to the existing solution.
 The code will still run locally, but the logs will be collected in the clouds.
 
@@ -101,22 +94,22 @@ with tempfile.TemporaryDirectory() as tmp_dir:
     mlflow.log_artifact(f"{tmp_dir}/model.joblib")
 ```
 
-We have added all these changes to the `azureml_tutorial/train_with_mlflow.py` script.
+We have added all these changes to the `azureml_tracking/train_with_mlflow.py` script.
 Have a look at the code and make sure you understand what is happening.
 When you are done, you can run the script using:
 
 ```bash
-python azureml_tutorial/train_with_mlflow.py --train_dataset data/train.csv --test_dataset data/test.csv 
+python azureml_tracking/train_with_mlflow.py --train_dataset data/train.csv --test_dataset data/test.csv 
 ```
 
 In the AzureML portal, you should now see that your experiment has been queued.
 Once the experiment has finished, you should see the following:
 - All hyper-parameters and metrics:
-  ![experiment_overview](images/experiment_overview.jpg)
+  ![experiment_overview](../images/experiment_overview.jpg)
 - The decision boundary should be logged as an artifact:
-  ![experiment_overview](images/logged_decison_boundary.jpg)
+  ![experiment_overview](../images/logged_decison_boundary.jpg)
 - Your model be registered:
-    - ![experiment_overview](images/registerd_artifacts.jpg)
+    - ![experiment_overview](../images/registerd_artifacts.jpg)
 
 Now, we have added experiment tracking to the existing solution.
 However, we are still running the training process locally.
@@ -225,6 +218,7 @@ Once you have an understanding of what is happening, you can run the script usin
 ```bash
 python azureml_scripts/submit_job.py --compute_target <your_compute_target>
 ```
+Make sure that your compute target is up and running.
 
 This script submits a job to the compute cluster that runs the following 3 scripts in sequence:
 1. `azureml_tracking/download_dataset.py` This ensures that the data is downloaded from the blob storage.

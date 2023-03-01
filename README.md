@@ -1,7 +1,7 @@
-# AzureML with mlflow model management and fastapi deployment
-In the repository, we will show you how AzureML service can be used to train and manage machine learning models and deploy them safely for consumption. 
+### AzureML with mlflow model management and fastapi deployment
+In the repository, we will show you how AzureML service can be used to train and manage machine learning models and deploy them safely for consumption.
 
-## The problem
+### The problem
 The ML problem we are solving in this project is the noisy [two moon problem](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html#sklearn.datasets.make_moons).
 The train and test data sets looks like this:
 
@@ -15,12 +15,13 @@ The training process consists of the following steps:
 3. Evaluate the model on the test data.
 4. Show the resulting decision boundary.
 5. Save the model.
+6. Deploy it for inference.
 
-## The end goal
+### The end goal
 This tutorial has two parts that are given below: 
-1. Experiment Tracking: Move our training process into the cloud such that we can leverage more computing power and train our model faster. Track our experiments in a single place such that we can track experiments over time and can compare different runs.
+1. [Experiment Tracking](azureml_tracking/README.md): Move our training process into the cloud such that we can leverage more computing power and train our model faster. Track our experiments in a single place such that we can track experiments over time and can compare different runs.
 
-2. Deployment: Use our trained model in production by creating a AzureML endpoint and deploying a custom fastapi container to the cloud. 
+2. [Deployment](azureml_deployment/README.md): Use our trained model in production by creating a AzureML endpoint and deploying a custom fastapi container to the cloud. 
 
 When we are done we should have the following results:
 - All the metadata, hyperparameters and metrics of our experiments are stored a single place.
@@ -30,13 +31,13 @@ When we are done we should have the following results:
 - We can register models and their artifacts in a single place, and we can easily download them for future usage.
   - ![experiment_overview](images/registerd_artifacts.jpg)
 
-## Preparation
+### Preparation
 In this repo, we assume you have a working AzureML workspace.
 In the workspace, you should have a compute cluster and optionally a compute instance.
 You can preform all the step in this tutorial either on your local machine or on the compute instance.
 
 
-### Preparing your local machine
+#### Preparing your local machine
 In this tutorial, you need to be able to submit jobs from your machine. Depending on your network setup, your AzureML workspace might not be accessible from your local machine.
 In this case, you should either use a compute instance or contact your IT department.
 From here on, I assume that your workspace is accessible from your local machine.
@@ -65,7 +66,7 @@ You can obtain this file by:
 The only thing left to do is to install the required python packages.
 For this see the "Install the Python environment" section below.
 
-### Preparing your compute instance
+#### Preparing your compute instance
 An compute instance is a Linux based virtual machine that you can rent via AzureML.
 You can do this by:
 
@@ -121,8 +122,8 @@ Note: make sure run this inside a virtual environment.
 
 
 
-## FAQ
-### Can not install the required packages due to a cryptography package error
+### FAQs
+##### Can not install the required packages due to a cryptography package error
 If you get the following error when setting up the environment in a compute instance, make sure that you have run:
 ```
 conda init bash
@@ -130,7 +131,7 @@ conda init bash
 For some reason, this is not done automatically by AzureML during the compute instance creation.
 As, you cannot access the base conda environment.
 
-### I get a no module named 'azureml.dataprep' error
+##### I get a no module named 'azureml.dataprep' error
 This error most like occurs because you are using a none-`x86_64` platform.
 The `azureml.dataprep` package is only available for `x86_64` platforms.
 The easiest way to fix this is to create a new compute instance.

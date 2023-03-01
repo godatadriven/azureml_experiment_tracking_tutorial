@@ -12,13 +12,12 @@ app = FastAPI()
 class TestDatapoint(BaseModel):
     x1: float = None
     x2: float = None
-
-
+    
 class PredictionRequest(BaseModel):
     data: List[TestDatapoint] = []
 
-
-# Load the model
+# The model is loaded outside the /score path. 
+# As we do not want to load it everytime the /score is called.
 with open("models/model.joblib", "rb") as model_pickle:
     try:
         model = joblib.load(model_pickle)

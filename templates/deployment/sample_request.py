@@ -9,7 +9,7 @@ body = {
 }
 
 # Create a post request to check the web server.
-local_server_address = "http://localhost:8000/score"
+local_server_address = "http://0.0.0.0:8000/score"
 response = requests.post(
     local_server_address,
     json=body,

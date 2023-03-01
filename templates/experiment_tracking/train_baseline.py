@@ -35,6 +35,7 @@ def main() -> None:
     for param, value in param_grid.items():
         print(f"gridsearch/{param}", str(value))
 
+    # We will use RandomForest with GridSearchCV.
     model = RandomForestClassifier()
     grid_search = GridSearchCV(model, param_grid, cv=args.n_cross_vals, n_jobs=-1)
 
