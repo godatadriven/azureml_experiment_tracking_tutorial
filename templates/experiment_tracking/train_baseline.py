@@ -1,11 +1,13 @@
 from argparse import ArgumentParser, Namespace
+from typing import Any
 
 import pandas as pd
 from joblib import dump
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
-from utils import create_decision_boundary_figure
+import matplotlib.pyplot as plt
+from sklearn.inspection import DecisionBoundaryDisplay
 
 
 def main() -> None:
@@ -62,6 +64,33 @@ def main() -> None:
 
     # Export the model to disk
     dump(model, "model.joblib")
+
+
+def create_decision_boundary_figure(
+    model: Any,
+    dataset: pd.DataFrame,
+    return_figure: bool = True,
+) -> plt.Figure:
+    """
+    Here we use the DecisionBoundaryDisplay to plot the decision boundary of the model.
+    See https://scikit-learn.org/stable/modules/generated/sklearn.inspection.DecisionBoundaryDisplay.html
+    :param model: The trained model to plot the decision boundary for.
+    :param dataset: The test data to plot the decision boundary for.
+    :return: The figure containing the decision boundary plot.
+    """
+    figure = plt.figure()
+    ax = figure.add_subplot(1, 1, 1)
+    display = DecisionBoundaryDisplay.from_estimator(
+        model,
+        X=dataset[["x1", "x2"]],
+        response_method="predict",
+        ax=ax,
+    )
+    if return_figure:
+        display.plot()
+    ax.scatter(dataset["x1"], dataset["x2"], c=dataset["y"])
+    ax.title.set_text("Decision boundary on test data")
+    return figure
 
 
 def parse_args() -> Namespace:

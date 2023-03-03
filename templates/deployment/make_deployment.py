@@ -68,8 +68,10 @@ def main() -> None:
     print(response.json())
     logger.info(f"{module} Success!")
 
+
 def _does_endpoint_exist(ml_client: MLClient, endpoint_name: str):
     return endpoint_name in [e.name for e in ml_client.online_endpoints.list()]
+
 
 def _get_or_create_endpoint(ml_client, endpoint_name):
     if not _does_endpoint_exist(ml_client, endpoint_name):

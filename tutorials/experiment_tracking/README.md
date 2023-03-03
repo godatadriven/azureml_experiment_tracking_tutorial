@@ -9,7 +9,7 @@ This section will focus on training a machine learning model and tracking the ex
 
 #### 1. Traning the model locally
 First, we will run the existing code locally to see how it works.
-To do this, we will use the `azureml_tutorial/train_original.py` script.
+To do this, we will use the `tutorials/experiment_tracking/train_baseline.ipynb` script.
 This scripts performs the following steps:
 1. Load the data.
 2. Preform a grid search to find the best hyperparameters.

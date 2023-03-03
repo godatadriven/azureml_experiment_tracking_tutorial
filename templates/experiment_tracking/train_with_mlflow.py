@@ -9,7 +9,8 @@ from joblib import dump
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
-from utils import create_decision_boundary_figure, get_workspace
+from scripts.utils import get_workspace
+from .train_baseline import create_decision_boundary_figure
 
 
 def main() -> None:
