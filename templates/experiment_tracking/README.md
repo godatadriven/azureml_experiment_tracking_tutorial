@@ -105,11 +105,11 @@ python azureml_tracking/train_with_mlflow.py --train_dataset data/train.csv --te
 In the AzureML portal, you should now see that your experiment has been queued.
 Once the experiment has finished, you should see the following:
 - All hyper-parameters and metrics:
-  ![experiment_overview](../images/experiment_overview.jpg)
+  ![experiment_overview](../../images/experiment_overview.jpg)
 - The decision boundary should be logged as an artifact:
-  ![experiment_overview](../images/logged_decison_boundary.jpg)
+  ![experiment_overview](../../images/logged_decison_boundary.jpg)
 - Your model be registered:
-    - ![experiment_overview](../images/registerd_artifacts.jpg)
+    - ![experiment_overview](../../images/registerd_artifacts.jpg)
 
 Now, we have added experiment tracking to the existing solution.
 However, we are still running the training process locally.

@@ -5,7 +5,7 @@ In the repository, we will show you how AzureML service can be used to train and
 The ML problem we are solving in this project is the noisy [two moon problem](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html#sklearn.datasets.make_moons).
 The train and test data sets looks like this:
 
-![train and test data](images/data.png)
+![train and test data](../images/data.png)
 You can find the data in the `data` folder and the code to generate the data  in `azureml_scripts/create_dataset.py`.
 
 We will use a Random Forest classifier from scikit-learn to solve this problem.
