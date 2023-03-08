@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Jordi Smit <j0rd1smit@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "azureml_tutorial"}]
+packages = [{include = "azureml_tracking"}]
 
 [tool.poetry.dependencies]
 python = "3.8.*"
@@ -16,6 +16,10 @@ pandas = "^1.5.2"
 numpy = "^1.24.1"
 scikit-learn = "^1.2.0"
 azureml-mlflow = "^1.48.0"
+azure-ai-ml = "^1.4.0"
+uvicorn = "^0.20.0"
+fastapi = "^0.92.0"
+azure-keyvault-secrets = "^4.6.0"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"

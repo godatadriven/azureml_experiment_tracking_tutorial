@@ -34,12 +34,12 @@ def main() -> None:
 
     # Here give the path to source directory.
     # This directory will be copied to AzoureML and be mounted in environment.
-    source_directory = repo_root / "azureml_tutorial"
+    source_directory = repo_root / "azureml_tracking"
     # After the source directory is mounted, AzureML will execute the following bash command:
     commands = [
-        "python download.py --dataset_name moon_dataset --output_folder data",
+        "python download_dataset.py --dataset_name moon_dataset --output_folder data",
         "python train_with_mlflow.py --train_dataset data/train.csv --test_dataset data/test.csv",
-        "python register.py --model_name moon_model",
+        "python register_model.py --model_name moon_model",
     ]
     # Here we combine all the configuration
     script_run_config = ScriptRunConfig(

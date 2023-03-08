@@ -16,6 +16,7 @@ def main() -> None:
     df = pd.DataFrame({"x1": X[:, 0], "x2": X[:, 1], "y": y})
     df_train, df_test = train_test_split(df, test_size=0.2, random_state=42)
 
+    # Get workspace from config.
     workspace = Workspace.from_config()
     datastore = workspace.get_default_datastore()
 
