@@ -19,6 +19,7 @@ azureml-mlflow = "^1.48.0"
 azure-ai-ml = "^1.4.0"
 uvicorn = "^0.20.0"
 fastapi = "^0.92.0"
+azure-keyvault-secrets = "^4.6.0"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"

@@ -279,6 +279,24 @@ msal-extensions = ">=0.3.0,<2.0.0"
 six = ">=1.12.0"
 
 [[package]]
+name = "azure-keyvault-secrets"
+version = "4.6.0"
+description = "Microsoft Azure Key Vault Secrets Client Library for Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "azure-keyvault-secrets-4.6.0.zip", hash = "sha256:fa8c11d4ff57a40b5e4207a0252c7dd29d0a9399688056b49d7e2b4c436d3a5a"},
+    {file = "azure_keyvault_secrets-4.6.0-py3-none-any.whl", hash = "sha256:79369336c91b2dcadd2b53127cc2d2700421fcfd0d51e4131a6afec314eca90e"},
+]
+
+[package.dependencies]
+azure-common = ">=1.1,<2.0"
+azure-core = ">=1.20.0,<2.0.0"
+msrest = ">=0.6.21"
+six = ">=1.11.0"
+
+[[package]]
 name = "azure-mgmt-authorization"
 version = "3.0.0"
 description = "Microsoft Azure Authorization Management Client Library for Python"
@@ -4073,4 +4091,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.8.*"
-content-hash = "f2c114eaf1cb4e08820f8aa4dabd4d3d9ed5895bdbe390a54c114a3a41f16730"
+content-hash = "74b564a4ba5f8fe0d308bd152152e46827e5c65aa4627bf7f166a5b49616b4fa"
